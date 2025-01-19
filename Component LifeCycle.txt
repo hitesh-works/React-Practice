@@ -1,0 +1,70 @@
+Talk about Component Lifecycle
+. Mounting:
+
+Constructor (Class Components): (If using class components) This is the first method called when a component is created. You can initialize the component's state here.
+static getDerivedStateFromProps() (Class Components): (If using class components) This method allows you to update the state based on changes to the component's props before the component renders.
+render(): This is the core method of a component. It returns the JSX that will be rendered to the DOM.
+componentDidMount(): This method is called after the component is first rendered to the DOM. It's a good place to:
+Fetch data from an API.
+Set up subscriptions or event listeners.
+Perform DOM manipulations.
+2. Updating:
+
+static getDerivedStateFromProps() (Class Components): (If using class components) This method is called before re-rendering due to prop changes.
+shouldComponentUpdate() (Class Components): (If using class components) This method allows you to control whether the component should re-render when its props or state change. Returning false will prevent the re-render.
+render(): This method is called again to re-render the component with the updated props or state.
+componentDidUpdate(): This method is called after the component has been re-rendered due to prop or state changes. It's a good place to:
+Update the DOM based on the new state.
+Make API calls based on the new props.
+3. Unmounting:
+
+componentWillUnmount() (Class Components): (If using class components) This method is called immediately before the component is removed from the DOM. It's a good place to:
+Cancel any subscriptions or timers.
+Clean up any event listeners.
+Simple Example (Functional Component with useEffect):
+
+JavaScript
+
+import React, { useEffect, useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    // Mount: Perform side effects after initial render
+    console.log('Component Mounted');
+    // Example: Fetch data from an API 
+    // fetch('https://api.example.com/data') 
+    //   .then(response => response.json()) 
+    //   .then(data => { 
+    //     // Update state with fetched data 
+    //   });
+
+    // Cleanup: Cancel any subscriptions or timers
+    return () => { 
+      console.log('Component Unmounting'); 
+      // Example: Cancel a timer 
+      // clearInterval(intervalId); 
+    };
+  }, []); // Empty dependency array: Run effect only once after initial render
+
+  const handleClick = () => {
+    setCount(count + 1);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
+
+
+This example demonstrates:
+
+Mounting: The useEffect hook simulates side effects that happen after the initial render.
+Updating: When the handleClick function is called, the component re-renders with the updated count state.
+Unmounting: The cleanup function within the useEffect hook simulates actions that should happen before the component is removed from the DOM.

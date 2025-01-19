@@ -1,0 +1,15 @@
+What is React.suspense?
+
+React.Suspense is a component in React that allows you to suspend rendering of a component until a certain condition is met. This is particularly useful for implementing lazy loading of components, where you want to load a component only when it is actually needed, rather than loading all components at once.
+
+const SomeComponent = React.lazy(() => import('./SomeComponent'));
+
+function MyApp() {
+  return (
+    <div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <SomeComponent />
+      </Suspense>
+    </div>
+  );
+}

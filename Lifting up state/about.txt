@@ -1,0 +1,9 @@
+What is Lifting up state mean?
+
+"Lifting up state" is a term used in React to describe the process of moving state from a child component to its parent component. This is typically done when multiple child components need access to the same state, or when the child component needs to modify the state. By lifting the state up to the parent component, it can be shared and updated by all of the child components that need it.
+
+For example, imagine you have a component A that renders two child components B and C, and both B and C need to access and modify a piece of state. Instead of keeping the state in each of the child components, you could lift the state up to the parent component A and pass it down as props to the child components.
+
+This allows you to manage the state in one central place and avoid duplicating the state in multiple child components. It also makes it easier to manage the state and avoid potential bugs that could arise from keeping the state in multiple child components.
+
+In summary, "lifting up state" refers to the process of moving state from a child component to its parent component, in order to make the state accessible and manageable by all of the components that need it.

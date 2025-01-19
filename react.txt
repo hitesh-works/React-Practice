@@ -1,0 +1,129 @@
+HOOKS:-  are a feature in React that allows you to add state and other React features to functional components. Hooks make it possible to add these features to functional components as well, making them a more versatile and flexible way to build components in React.
+
+Q.2 >> useState vs useRef
+
+useState is used to manage state in a functional component, while useRef is used to store a reference to a DOM element or a component instance.
+
+Q.3 >> useCallback vs useMemo
+
+useCallback is used to memoize a callback function. This is useful when you have a component that renders often and you want to prevent it from re-creating the function on every render.
+
+useMemo is used to memoize a value. This is useful when you have a component that performs an expensive calculation on render and you want to prevent it from re-calculating the value on every render.
+
+Q.4 >> Why Key Prop is used in Listing Components?
+
+The key prop is used in React when rendering a list of components to help React keep track of the identity of each component in the list. When rendering a list of components, React uses the key prop to determine if a component has changed or if it's the same as the one that was previously rendered.
+
+If the key of a component changes, React will treat it as a new component and re-render it. If the key remains the same, React will know that it's the same component and not re-render it. This helps React optimize the performance of rendering lists by reducing the amount of unnecessary DOM updates.
+
+Q.5 >> What are the ways to make Performance in your web app?
+
+Here are some common ways to improve the performance of a web app in React:
+
+Minimize the use of unnecessary state updates: Unnecessary state updates can cause a lot of re-renders and slow down your app. You can use the shouldComponentUpdate lifecycle method or the useMemo hook to prevent unnecessary updates.
+
+Use memo instead of PureComponent: React.memo is a higher-order component that memoizes a functional component, allowing it to only re-render if its props change. This is more efficient than using React.PureComponent for class components.
+
+Use useCallback when passing functions as props: If you're passing a function as a prop to a child component, it's best to pass it as a **useCallback**wrapped function to avoid unnecessary re-renders.
+
+Use useEffect carefully: useEffect is a powerful tool, but it can also cause performance issues if used improperly. Be careful to only use useEffect when necessary, and to clean up any effects when a component unmounts.
+
+Lazy-load components: If your app has a lot of components that aren't always needed, you can lazy-load them to improve the initial load time of your app.
+
+Use efficient data structures: When storing large amounts of data, be mindful of the data structures you use. For example, using an array for large amounts of data can lead to slow performance, whereas using a Map or Set can be much faster.
+
+Use a virtualized list: If you're rendering a large list of items, you can use a virtualized list to only render the items that are currently visible. This can greatly improve performance and reduce the amount of DOM updates.
+
+Minimize the number of DOM nodes: The more nodes there are in the DOM, the slower your app will be. Try to keep the number of nodes as low as possible by using efficient components and avoiding unnecessary nesting.
+
+Optimize images and other media: Large images and other media can slow down your app, so be sure to optimize them before using them in your app.
+
+
+Q.6 >>  How does React work behind the scenes?
+
+1. JSX to JavaScript:
+React uses JSX, a syntax extension to JavaScript, to describe the UI.   
+JSX gets transformed into regular JavaScript calls to React.createElement() during the build process.
+
+2. Virtual DOM (VDOM):
+React creates a lightweight in-memory representation of the actual DOM called the Virtual DOM.   
+This VDOM is a JavaScript object that mirrors the structure of the real DOM.   
+
+3. Rendering:
+When the component's state or props change, React re-renders the component, creating a new VDOM.   
+React then compares this new VDOM with the previous one to identify the differences.   
+
+4. Diffing Algorithm:
+React employs a highly efficient diffing algorithm to compare the two VDOMs.   
+It only updates the parts of the actual DOM that have changed, minimizing the number of expensive DOM manipulations.  
+
+5. DOM Updates:
+Based on the diffing results, React applies the necessary changes to the actual DOM.   
+This might involve adding, removing, or updating elements.
+
+6. Browser Rendering:
+The browser receives the updated DOM and re-renders the affected parts of the UI on the screen.
+
+Q.7 >> useState vs useReducer
+
+useState is a simple hook that is suitable for managing a small amount of state, while useReducer is a more powerful hook that is recommended for managing complex state and enforcing strict state transition logic.
+
+Q.8 >> Ways to test your React App
+
+There are several ways to test a React app, including:
+
+>> Unit testing: This involves testing individual components or parts of the code in isolation, without considering their interactions with other components.
+
+>> Integration testing: This involves testing the interactions between multiple components, and the communication between the components and the backend APIs.
+
+>> End-to-end (E2E) testing: This involves testing the entire application from the user's perspective, simulating real-world usage scenarios.
+
+>> Snapshot testing: This involves taking a snapshot of the rendered component, and comparing it to a previously stored snapshot to check for any differences.
+
+*--- There are tools to test a React app, including:---*
+
+>> Jest: Jest is a popular JavaScript testing library that works well with React. It provides a complete suite of testing tools, including a test runner, assertion library, and mocking tools.
+
+>> Enzyme: Enzyme is a testing library for React that makes it easy to write tests for your components. It provides a simple API for rendering and testing React components.
+
+>> Cypress: Cypress is an end-to-end testing framework that makes it easy to write, run, and debug tests for your React app.
+
+Q.9 >> Ways to debug your React App
+
+Debugging React applications can be done using various tools and techniques:
+
+React Developer Tools: A browser extension that provides an interface for inspecting and manipulating the React component tree.
+
+Console Logging: Use console.log() statements to log values and debug your code.
+
+Debugger Statement: Placing a debugger statement in your code will pause the execution of your program and allow you to inspect the current state.
+
+Using Source Maps: Source maps allow you to debug your code as if it were written in its original source form, even if it has been minified or transpiled.
+
+Using the Browser DevTools: Browser dev tools provide a rich set of tools for inspecting and debugging your code, including the ability to set breakpoints, inspect variables, and step through your code.
+
+React DevTools Profiler: A performance analysis tool that can help you identify performance bottlenecks in your React application.
+
+Q.10 >> What does a Portal mean in React?
+
+In React, a Portal is a way to render children into a DOM node that exists outside of the parent component's DOM tree. This is useful when you want to render a child component into a different location in the DOM, without affecting the parent component's layout.
+
+import React, { useState, useRef } from 'react';
+import ReactDOM from 'react-dom';
+
+function MyModal() {
+  const modalRoot = useRef(document.getElementById('modal-root'));
+  return ReactDOM.createPortal(<div>This is a modal</div>, modalRoot.current);
+}
+
+function App() {
+  return (
+    <div>
+      <div id='modal-root'></div>
+      <button>Open Modal</button>
+      {/* render MyModal component into modal-root */}
+      <MyModal />
+    </div>
+  );
+}
+In this example, the MyModal component is being rendered into a DOM node with the id modal-root, which is separate from the parent component's DOM tree. This allows you to render the modal into a different part of the page without affecting the layout of the parent component.

@@ -1,0 +1,38 @@
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [items, setItems] = useState([
+    { name: "Item 1", price: 10 },
+    { name: "Item 2", price: 20 },
+    { name: "Item 3", price: 15 },
+  ]);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      const total = items.reduce((acc, item) => acc + item.price, 0);
+      setTotalPrice(total);
+    };
+
+    calculateTotalPrice();
+  }, [items]);
+
+  return (
+    <div>
+      <h2>Shopping Cart</h2>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>
+            {item.name} - ${item.price}
+          </li>
+        ))}
+      </ul>
+      <p>Total Price: ${totalPrice}</p>
+    </div>
+  );
+}
+
+export default App;
+
+//Derived state in React refers to state that is calculated or derived from other state or props within a component. It's a way to optimize performance by avoiding unnecessary re-renders and calculations.

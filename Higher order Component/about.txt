@@ -1,0 +1,7 @@
+Higher-order components or HOC is the advanced method of reusing the component functionality logic. It simply takes the original component and returns the enhanced component
+
+Reason to use Higher-Order component:
+
+Easy to handle
+Get rid of copying the same logic in every component
+Makes code more readable

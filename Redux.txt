@@ -1,0 +1,62 @@
+Q.1 >> Redux
+
+Redux is a state management library that is often used in React applications to manage the global state of an application. It provides a centralized store for all the data in your application and makes it easy to update and manage the state of your application in a predictable and efficient way.
+
+React components can access the state from the store using the connect function from the react-redux library, which maps the state from the store to the props of a component. When the state changes, the connected components re-render, allowing the user interfa
+
+Q.2 >> What is Server-side rendering and how it’s different from client-side rendering?
+
+Server-side rendering (SSR) is a technique of rendering a client-side single-page application (SPA) on the server, before sending the fully rendered page to the client. The server generates an HTML file that includes the actual HTML structure and content of the page, rather than just the minimal HTML structure that is required to load the JavaScript and make an AJAX request for the content. This means that the content is immediately visible to users, regardless of whether or not the JavaScript has finished loading.
+
+Client-side rendering, on the other hand, is a technique in which the browser downloads a JavaScript file, which then generates the HTML structure and content of the page on the client. The content is not immediately visible to users until the JavaScript has finished loading. This can result in a slower initial load time for the page, as well as slower time-to-interactive, especially on low-end devices.
+
+In conclusion, server-side rendering provides a better user experience for initial load and time-to-interactive, while client-side rendering provides a better user experience for dynamic updates to the content of the page.
+
+
+Q.3 >> Talk about Middlewares Redux uses
+
+Redux uses middleware as a way to extend its functionality and process actions before they reach the reducer. Some popular middlewares used with Redux are:
+
+Redux Thunk - allows you to write action creators that return a function instead of an action.
+
+Redux Saga - a library that uses an ES6 generator function to handle async logic in Redux.
+
+Redux Logger - logs every action and state change in the console for easy debugging.
+
+Redux Promise - automatically handles asynchronous actions by resolving or rejecting a promise.
+
+Redux Persist - helps to persist and rehydrate the state of a Redux store between page reloads and app updates.
+
+Q.4 >> What does Redux Thunk do?
+
+Redux Thunk is a middleware for Redux that allows you to write action creators that return a function instead of an action. This allows you to perform asynchronous operations (such as making an API call) inside the action creator and dispatch actions when the operation is complete.
+
+const fetchData = () => {
+  return (dispatch) => {
+    dispatch(requestData());
+    return fetch('https://some-api.com/data')
+      .then((response) => response.json())
+      .then((json) => dispatch(receiveData(json)));
+  };
+};
+
+Q.5 >> What does Redux Saga do?
+
+With Redux Saga, you can write generator functions that are executed by the middleware to perform side effects and dispatch actions. The generator functions listen for actions dispatched to the store, and can perform asynchronous operations and dispatch actions in response. This makes it easier to manage the flow of asynchronous operations and the related state updates in your application.
+
+import { call, put, takeEvery } from 'redux-saga/effects';
+import { fetchDataSuccess, fetchDataFailure } from './actions';
+
+function* fetchDataSaga() {
+  try {
+    const data = yield call(fetch, 'https://some-api.com/data');
+    const json = yield data.json();
+    yield put(fetchDataSuccess(json));
+  } catch (error) {
+    yield put(fetchDataFailure(error));
+  }
+}
+
+export default function* rootSaga() {
+  yield takeEvery('FETCH_DATA', fetchDataSaga);
+}
