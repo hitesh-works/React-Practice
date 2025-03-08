@@ -1,0 +1,129 @@
+JavaScript
+
+import { useState, useEffect } from 'react';
+
+// Custom Hook: useFetch
+function useFetch(url) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        setData(jsonData);
+        setLoading(false);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]); // Depend on url, so fetch again if url changes
+
+  return { data, loading, error };
+}
+
+// Example Component using useFetch
+function MyComponent() {
+  const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/todos/1');
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  if (!data) return null; // or an empty div;
+
+  return (
+    <div>
+      <h1>Todo Item</h1>
+      <p>Title: {data.title}</p>
+      <p>Completed: {data.completed ? 'Yes' : 'No'}</p>
+    </div>
+  );
+}
+
+// Another Component using useFetch (reusing the same logic)
+function AnotherComponent() {
+  const { data, loading, error } = useFetch('https://jsonplaceholder.typicode.com/posts/1');
+
+  if (loading) return <p>Loading posts...</p>;
+  if (error) return <p>Post Error: {error.message}</p>;
+  if (!data) return null;
+
+  return(
+    <div>
+        <h1>Post</h1>
+        <p>Title: {data.title}</p>
+        <p>Body: {data.body}</p>
+    </div>
+  )
+}
+
+// Example of a custom hook for online status
+function useOnlineStatus(){
+    const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+    useEffect(() => {
+        function handleOnline(){
+            setIsOnline(true);
+        }
+        function handleOffline(){
+            setIsOnline(false);
+        }
+
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+    return isOnline;
+}
+
+function OnlineStatusDisplay(){
+    const online = useOnlineStatus();
+
+    return(
+        <div>
+            <p>You are {online ? 'online' : 'offline'}</p>
+        </div>
+    )
+}
+
+// You would then render MyComponent, AnotherComponent, and OnlineStatusDisplay in your main app.
+Explanation:
+
+useFetch(url):
+
+This custom hook encapsulates the logic for fetching data from an API.
+It uses useState to manage the data, loading, and error states.
+It uses useEffect to perform the fetch when the url changes.
+It returns an object containing the data, loading, and error states.
+MyComponent and AnotherComponent:
+
+These components use the useFetch hook to fetch and display data.
+They handle the loading and error states gracefully.
+This shows how the same fetching logic can be reused in different components.
+useOnlineStatus():
+
+This custom hook checks if the user is online.
+It uses useState to manage the online status.
+It uses useEffect to add and remove event listeners for the online and offline events.
+It returns the boolean value of the online status.
+OnlineStatusDisplay():
+
+This component displays the online status using the useOnlineStatus hook.
+Key Takeaways:
+
+Custom hooks make your code more modular and reusable.
+They help to separate concerns by moving logic out of components.
+They improve the readability and maintainability of your React applications.
+They must start with the word "use".
